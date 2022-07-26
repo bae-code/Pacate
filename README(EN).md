@@ -4,8 +4,8 @@
 ## Development purpose
 
 This service keep records of reptile breeding and its management.
-First goal is to make it easier to see when managing many objects.
-Second goal is Statistical Services with data of all breeders.
+- First goal is to make it easier to see when managing many objects.
+- Second goal is Statistical Services with data of all breeders.
 
 ## Development Plan
 
