@@ -1,0 +1,8 @@
+from urllib.parse import urlparse
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.CaresheetView.as_view()),
+    path('/detail', views.CaresheetDetailView.as_view() ),
+]
