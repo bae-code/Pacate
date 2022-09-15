@@ -15,8 +15,7 @@ class CaresheetView(APIView): # CBV 방식
     # load all caresheets user have
 
     def get(self, request):
-        user = request.user.id
-        user_sheets = Caresheet.objects.filter(master_id=user)
+        user_sheets = Caresheet.objects.my_caresheets(request.user.id)
         serialized_care_data = CaresheetSerializer(user_sheets, many=True).data
         print(serialized_care_data[0]['name'])
         return Response(serialized_care_data, status = status.HTTP_200_OK)
@@ -46,13 +45,12 @@ class CaresheetDetailView(APIView):
         #Find Weight Record 
         
         # Need caresheet of name_id 
-        recent_sort = WeightRecord.objects.filter(name_id=1).order_by('record_date')
-        past_sort = WeightRecord.objects.filter(name_id=1).order_by('-record_date')
-        present_weight = recent_sort[0].weight
-        all_weight_records = []
-        for _ in past_sort:
-            all_weight_records.append(_.weight)
-        
-        caresheet_information = {"name": name,"sex": sex, "morph": morph, "regist_date": regist_date,"present_weight" :present_weight,"all_weight" :all_weight_records}
+        #매니저로 이동#
+        a = WeightRecord.get_past_weight_record(caresheet)
+        #############
+        ## mixin 으로 이동####
+
+        #####################
+        caresheet_information = {"name": name,"sex": sex, "morph": morph, "regist_date": regist_date,"present_weight" :a[-1],"all_weight" : a}
         return Response(caresheet_information, status = status.HTTP_200_OK)
         
